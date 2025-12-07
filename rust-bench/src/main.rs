@@ -1,8 +1,14 @@
 use mimalloc::MiMalloc;
 use rand::{SeedableRng, rngs::SmallRng, seq::IndexedRandom};
-use std::{hint::black_box, sync::atomic::AtomicUsize, thread, time::Instant};
+use std::{
+    hint::black_box,
+    sync::atomic::{AtomicUsize, Ordering},
+    thread,
+    time::Instant,
+};
 
-// c.f. https://github.com/microsoft/mimalloc/issues/1104
+// adapted from example in
+// https://github.com/microsoft/mimalloc/issues/1104
 
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
@@ -25,7 +31,7 @@ fn main() {
                     sum += allocation.choose(&mut rng).unwrap();
                 }
                 print!(".");
-                gsum.fetch_add(sum as usize, std::sync::atomic::Ordering::Relaxed);
+                gsum.fetch_add(sum as usize, Ordering::Relaxed);
             });
         }
     });
@@ -33,5 +39,5 @@ fn main() {
 
     let duration = start.elapsed();
     println!("took: {}", duration.as_millis());
-    println!("gsum: {}", gsum.load(std::sync::atomic::Ordering::Relaxed));
+    println!("gsum: {}", gsum.load(Ordering::Relaxed));
 }

@@ -12,6 +12,9 @@ static std::atomic<long> gsum;
 
 const int LEN[] = {1000, 5000, 10000, 50000};
 
+// adapted from example in
+// https://github.com/microsoft/mimalloc/issues/1104
+
 static void local_alloc()
 {
   // thread-local random number generator
@@ -24,10 +27,6 @@ static void local_alloc()
     int *p = (int *)mi_zalloc_aligned(len * sizeof(int), alignof(int));
     p[0] = 1;
     sum += p[rng() % len];
-    // if ((rng() % 1000) > 10)
-    // {
-    //   free(p);
-    // }
     free(p);
   }
   std::cout << ".";
