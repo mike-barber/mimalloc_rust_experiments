@@ -2,3 +2,10 @@
 **/*.rs.bk
 Cargo.lock
 .DS_Store
+
+cpp-bench/CMakeFiles
+cpp-bench/mimalloc
+cpp-bench/cmake_install.cmake
+cpp-bench/CMakeCache.txt
+cpp-bench/Makefile
+cpp-bench/cpp-bench

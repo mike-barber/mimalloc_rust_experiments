@@ -17,8 +17,9 @@ readme = "README.md"
 [workspace]
 members = [
     "libmimalloc-sys",
-    "libmimalloc-sys/sys-test",
+    "libmimalloc-sys/sys-test", 
     "test-override-with-dylib",
+    "rust-bench",
 ]
 
 [badges]
